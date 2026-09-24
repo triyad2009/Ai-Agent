@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI-Agent • Windows Voice Console</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">LOCAL WINDOWS AGENT</div>
+        <h1>AI-Agent</h1>
+      </div>
+      <div class="status"><span id="dot"></span><span id="status">Connecting…</span></div>
+    </header>
+
+    <section class="hero">
+      <div class="orb" id="orb"><span>🎙️</span></div>
+      <h2 id="heroText">Speak a command</h2>
+      <p>Voice → GPT Agent → Windows PC → Result</p>
+      <button id="mic" class="mic">Hold / Click to Talk</button>
+      <div class="transcript" id="transcript">Your speech will appear here…</div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><span>Activity</span><button id="clear">Clear</button></div>
+      <div id="messages" class="messages"></div>
+    </section>
+
+    <section class="composer">
+      <input id="text" autocomplete="off" placeholder="Or type a command…">
+      <button id="send">Send</button>
+    </section>
+
+    <div id="confirm" class="modal hidden">
+      <div class="modal-card">
+        <div class="eyebrow">CONFIRMATION REQUIRED</div>
+        <h3 id="confirmTitle">Allow this action?</h3>
+        <p id="confirmBody"></p>
+        <div class="actions">
+          <button id="deny" class="secondary">Cancel</button>
+          <button id="allow" class="primary">Allow</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>
