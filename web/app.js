@@ -5,7 +5,7 @@ const messages=$("messages"), mic=$("mic"), text=$("text"), send=$("send"), orb=
 
 function add(role,content){const d=document.createElement("div");d.className="msg "+role;d.textContent=content;messages.appendChild(d);messages.scrollTop=messages.scrollHeight}
 function setStatus(t,ok=true){$("status").textContent=t;$("dot").style.background=ok?"#4bd38b":"#f0ad4e"}
-function speak(t){if("speechSynthesis" in window){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="en-US";speechSynthesis.speak(u)}}
+function speak(t){if("speechSynthesis" in window){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=$("lang").value;speechSynthesis.speak(u)}}
 
 async function init(){
   const r=await fetch("/api/session",{method:"POST"}); const d=await r.json(); sessionId=d.session_id;
@@ -34,11 +34,11 @@ $("clear").onclick=()=>messages.innerHTML="";
 
 function setupVoice(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return;
-  recognition=new SR(); recognition.lang="en-US"; recognition.interimResults=true; recognition.continuous=false;
+  recognition=new SR(); recognition.lang=$("lang").value; recognition.interimResults=true; recognition.continuous=false;
   recognition.onstart=()=>{listening=true;orb.classList.add("listening");mic.textContent="Listening…";$("heroText").textContent="Listening…"};
   recognition.onresult=e=>{let final="", interim="";for(let i=e.resultIndex;i<e.results.length;i++){const s=e.results[i][0].transcript;if(e.results[i].isFinal)final+=s;else interim+=s}$("transcript").textContent=final||interim;if(final)sendCommand(final)};
   recognition.onerror=e=>{add("agent","Voice error: "+e.error);};
   recognition.onend=()=>{listening=false;orb.classList.remove("listening");mic.textContent="Hold / Click to Talk";if($("heroText").textContent==="Listening…")$("heroText").textContent="Speak a command"};
-  mic.onclick=()=>{if(listening)recognition.stop();else recognition.start()};
+  $("lang").onchange=()=>{if(recognition)recognition.lang=$("lang").value}; mic.onclick=()=>{if(listening)recognition.stop();else {recognition.lang=$("lang").value;recognition.start()}};
 }
 init().then(setupVoice);
