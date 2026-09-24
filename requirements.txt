@@ -1,0 +1,7 @@
+openai>=1.100.0
+python-dotenv>=1.1.0
+psutil>=7.0.0
+mss>=10.0.0
+pyautogui>=0.9.54
+SpeechRecognition>=3.14.0
+PyAudio>=0.2.14
